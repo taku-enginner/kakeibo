@@ -1,8 +1,10 @@
 class ReceiptCategoriesController < ApplicationController
   def index
+    @receipt_categories = ReceiptCategory.all
   end
 
   def show
+    @receipt_category = ReceiptCategory.find(params['id'])
   end
 
   def new

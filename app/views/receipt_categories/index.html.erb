@@ -1,2 +1,22 @@
-<h1>ReceiptCategories#index</h1>
-<p>Find me in app/views/receipt_categories/index.html.erb</p>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <!-- メインコンテナの幅設定 -->
+        <div class="col-12 col-md-8 col-lg-6">
+
+            <div class="card shadow-lg mb-4 rounded-3 border-info">
+                <div class="card-header bg-info text-white p-3">
+                    <h2 class="h5 mb-0 fw-bold">登録済みカテゴリ一覧</h2>
+                </div>
+                <div class="card-body p-4">
+                    <div class="mb-3">
+                      <%#<%= form.text_field :memo, class: "form-control form-control-lg", placeholder: "例: サミット" %>
+                      <% @receipt_categories.each do |category| %>
+                        <%= link_to category.name, receipt_category_path(category.id), class: "form-control form-control-lg" %>
+                      <% end %>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
