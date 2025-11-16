@@ -31,7 +31,6 @@
   <%# 💡 週のループ %>
   <% @weeks.each_with_index do |week_days, week_index| %>
     <% @count=@count+1 %>
-    <%= puts @count %>
 
     <%# 1. 週全体の行 (Bootstrap row) %>
     <div class="row g-0 border-bottom">
@@ -53,15 +52,15 @@
 
           <div class="item-area">
               <div class="item-row d-flex justify-content-between">
-                  <span>食費</span><span>¥ 1000</span>
+                <span>食費</span><span>¥ <%= @calendar_price_related_food[day] %></span>
               </div>
               <div class="item-row d-flex justify-content-between">
-                  <span>その他</span><span>¥ 5050</span>
+              <span>その他</span><span>¥ <%= @calendar_price_except_food[day] %></span>
               </div>
           </div>
 
           <div class="day-total">
-            <span>合計</span><span>¥ 0</span>
+            <span>合計</span><span>¥ <%= @calendar_price_related_food[day] + @calendar_price_except_food[day] %></span>
           </div>
         </div>
       <% end %>
