@@ -1,10 +1,13 @@
 Rails.application.routes.draw do
+  get "daily_results/index"
+  get "daily_results/show"
   devise_for :users, controllers: {
     registrations: 'users/registrations' #カスタムコントローラを使用
   }
   resources :receipt_categories
   resources :receipts
   resources :calendars, only: [:index, :show]
+  resources :daily_results, only: [:index, :show]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
