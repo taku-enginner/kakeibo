@@ -1,5 +1,3 @@
-<h1>Receipts#index</h1>
-<p>Find me in app/views/receipts/index.html.erb</p>
 <%= link_to "レシート作成画面", new_receipt_path %>
 
 <%# app/views/receipts/_receipts_list.html.erb %>
@@ -20,6 +18,7 @@
                         <tr>
                             <th scope="col" style="width: 15%;">日付</th>
                             <th scope="col">メモ</th>
+                            <th scope="col">カテゴリ</th>
                             <th scope="col" class="text-end" style="width: 15%;">操作</th>
                         </tr>
                     </thead>
@@ -35,10 +34,13 @@
                                 <td>
                                     <%= truncate(receipt.memo, length: 50, separator: '...') %>
                                 </td>
+                                <td>
+                                    <%= @receipt_category_map[receipt.receipt_category_id] %>
+                                </td>
 
                                 <%# 編集/削除など操作ボタン %>
                                 <td class="text-end">
-                                    <%= link_to '詳細', receipt_path(receipt), class: "btn btn-sm btn-outline-primary" %>
+                                    <%= link_to '削除', receipt_path(receipt), class: "btn btn-sm btn-outline-primary" %>
                                 </td>
                             </tr>
                         <% end %>

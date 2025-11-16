@@ -21,6 +21,7 @@
     background-color: #e9ecef;
     padding: 3px 6px;
     font-weight: bold;
+    font-size: 0.8rem;
 }
 /* 週の合計欄 */
 .week-total-cell {

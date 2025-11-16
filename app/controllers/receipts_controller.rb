@@ -2,19 +2,16 @@ class ReceiptsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @receipts = Receipt.all
-    # 自分の所属グループの食費系のレシートを取得
-    @hoge = Receipt.joins(:receipt_category)
+    @receipts = Receipt.joins(:receipt_category)
       .where(
-      user_group_id: current_user.user_group.id,
-      receipt_category: {food_related: true}
-    )
-    daily_total = @hoge.map{|hash| hash[:price] }.sum
-    puts daily_total
-
-    @hoge.each do |tmp|
-      puts tmp.regist_date
+        user_group_id: current_user.user_group.id
+      )
+        .order(:regist_date)
+    @receipt_category_map = {}
+    ReceiptCategory.all.each do |category|
+      @receipt_category_map[category.id] = category.name
     end
+    puts @receipt_category_map
   end
 
   def show
