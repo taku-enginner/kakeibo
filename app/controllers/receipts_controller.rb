@@ -3,7 +3,6 @@ class ReceiptsController < ApplicationController
 
   def index
     @receipts = Receipt.all
-    puts "******"
     # 自分の所属グループの食費系のレシートを取得
     @hoge = Receipt.joins(:receipt_category)
       .where(
@@ -16,8 +15,6 @@ class ReceiptsController < ApplicationController
     @hoge.each do |tmp|
       puts tmp.regist_date
     end
-    # 日付ごとに計算できていない。日付ごとに計算する。
-    puts "******"
   end
 
   def show

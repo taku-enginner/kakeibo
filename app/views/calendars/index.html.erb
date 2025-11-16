@@ -44,7 +44,7 @@
         <div class="col kakeibo-day-cell <%= is_current_month ? '' : 'text-muted' %> border-start border-end">
           <div class="day-header">
             <%# 日付の数字を表示 %>
-            <span><%= day.day %></span>
+            <span><%= link_to day.day, calendar_path(day) %></span>
           </div>
 
           <%# 💡 【機能】この日に対応する家計簿データを表示/入力するフォームを設置 %>
