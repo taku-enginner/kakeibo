@@ -2,6 +2,7 @@ class ReceiptsController < ApplicationController
   before_action :authenticate_user!
 
   def index
+    @receipts = Receipt.all
   end
 
   def show
