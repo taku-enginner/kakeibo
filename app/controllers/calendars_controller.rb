@@ -51,9 +51,11 @@ class CalendarsController < ApplicationController
     @weeks.each do |week|
       sum = 0
       week.each do |day|
-        joined_group_receipts_related_food.each do |receipt|
-          if day == receipt.regist_date
-            sum += receipt.price
+        if day >= @date.beginning_of_month and day <= @date.end_of_month
+          joined_group_receipts_related_food.each do |receipt|
+            if day == receipt.regist_date
+              sum += receipt.price
+            end
           end
         end
       end
@@ -83,9 +85,11 @@ class CalendarsController < ApplicationController
     @weeks.each do |week|
       sum = 0
       week.each do |day|
-        joined_group_receipts_except_food.each do |receipt|
-          if day == receipt.regist_date
-            sum += receipt.price
+        if day >= @date.beginning_of_month and day <= @date.end_of_month
+          joined_group_receipts_except_food.each do |receipt|
+            if day == receipt.regist_date
+              sum += receipt.price
+            end
           end
         end
       end
