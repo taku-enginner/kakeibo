@@ -1,3 +1,13 @@
+<% if @receipt.errors.any? %>
+  <div class="alert alert-danger">
+    <h4 class="alert-heading"><%= @receipt.errors.count %>件のエラーがあります:</h4>
+    <ul>
+      <% @receipt.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 <div class="container py-4">
     <div class="row justify-content-center">
         <!-- メインコンテナの幅設定 -->
@@ -10,7 +20,7 @@
                 </div>
                 <div class="card-body p-4">
                     <%# ユーザー提供のフォームヘルパーをBootstrapクラスで装飾 %>
-                    <%= form_with model: @receipt, url: receipts_create_path, local: true do |form| %>
+                    <%= form_with model: @receipt, local: true do |form| %>
                         <div class="mb-3">
                             <%# form-label クラスを適用 %>
                             <%= form.label :memo, "メモ", class: "form-label fw-semibold" %>
@@ -31,9 +41,9 @@
                         </div>
                         <div class="mb-3">
                             <%# form-label クラスを適用 %>
-                            <%= form.label :category_id, "カテゴリ", class: "form-label fw-semibold" %>
+                            <%= form.label :receipt_category_id, "カテゴリ", class: "form-label fw-semibold" %>
                             <%# form-control クラスを適用 %>
-                            <%= form.select :category_id, ["スーパー", "外食", "日用品"], {}, { class: "form-control form-control-lg"} %>
+                            <%= form.select :receipt_category_id, [["スーパー", 1], ["外食", 2], ["日用品", 3]], {}, { class: "form-control form-control-lg"} %>
                         </div>
 
                         <%# btn と btn-primary クラスを適用 %>
