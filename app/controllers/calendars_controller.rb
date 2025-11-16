@@ -16,44 +16,6 @@ class CalendarsController < ApplicationController
     get_joined_group_receipts_related_food
     get_joined_group_receipts_except_food
     # 週の合計金額
-
-    joined_group_receipts_related_food = Receipt.joins(:receipt_category)
-      .where(
-      user_group_id: current_user.user_group.id,
-      receipt_category: {food_related: true}
-    )
-
-    @weekly_price_related_food = []
-    @weeks.each do |week|
-      sum = 0
-      week.each do |day|
-        joined_group_receipts_related_food.each do |receipt|
-          if day == receipt.regist_date
-            sum += receipt.price
-          end
-        end
-      end
-      @weekly_price_related_food << sum
-    end
-
-    joined_group_receipts_except_food = Receipt.joins(:receipt_category)
-      .where(
-      user_group_id: current_user.user_group.id,
-      receipt_category: {food_related: false}
-    )
-
-    @weekly_price_except_food = []
-    @weeks.each do |week|
-      sum = 0
-      week.each do |day|
-        joined_group_receipts_except_food.each do |receipt|
-          if day == receipt.regist_date
-            sum += receipt.price
-          end
-        end
-      end
-      @weekly_price_except_food << sum
-    end
   end
 
   def show
@@ -85,6 +47,19 @@ class CalendarsController < ApplicationController
       end
       @calendar_price_related_food[day] = sum
     end
+
+    @weekly_price_related_food = []
+    @weeks.each do |week|
+      sum = 0
+      week.each do |day|
+        joined_group_receipts_related_food.each do |receipt|
+          if day == receipt.regist_date
+            sum += receipt.price
+          end
+        end
+      end
+      @weekly_price_related_food << sum
+    end
   end
 
   def get_joined_group_receipts_except_food
@@ -103,6 +78,19 @@ class CalendarsController < ApplicationController
         end
       end
       @calendar_price_except_food[day] = sum
+    end
+
+    @weekly_price_except_food = []
+    @weeks.each do |week|
+      sum = 0
+      week.each do |day|
+        joined_group_receipts_except_food.each do |receipt|
+          if day == receipt.regist_date
+            sum += receipt.price
+          end
+        end
+      end
+      @weekly_price_except_food << sum
     end
   end
 end
