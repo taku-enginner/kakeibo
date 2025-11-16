@@ -6,6 +6,7 @@ class ReceiptsController < ApplicationController
   end
 
   def new
+    @receipt = Receipt.new(regist_date: Date.current)
   end
 
   def create

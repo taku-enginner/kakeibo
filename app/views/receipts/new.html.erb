@@ -1,2 +1,46 @@
-<h1>Receipts#new</h1>
-<p>Find me in app/views/receipts/new.html.erb</p>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <!-- メインコンテナの幅設定 -->
+        <div class="col-12 col-md-8 col-lg-6">
+
+            <!-- フォームカード -->
+            <div class="card shadow-lg mb-4 rounded-3 border-info">
+                <div class="card-header bg-info text-white p-3">
+                    <h2 class="h5 mb-0 fw-bold">新しいレシートを追加</h2>
+                </div>
+                <div class="card-body p-4">
+                    <%# ユーザー提供のフォームヘルパーをBootstrapクラスで装飾 %>
+                    <%= form_with model: @receipt, url: receipts_create_path, local: true do |form| %>
+                        <div class="mb-3">
+                            <%# form-label クラスを適用 %>
+                            <%= form.label :memo, "メモ", class: "form-label fw-semibold" %>
+                            <%# form-control クラスを適用 %>
+                            <%= form.text_field :memo, class: "form-control form-control-lg", placeholder: "例: サミット" %>
+                        </div>
+                        <div class="mb-3">
+                            <%# form-label クラスを適用 %>
+                            <%= form.label :price, "金額", class: "form-label fw-semibold" %>
+                            <%# form-control クラスを適用 %>
+                            <%= form.number_field :price, class: "form-control form-control-lg", placeholder: "例: 1234" %>
+                        </div>
+                        <div class="mb-3">
+                            <%# form-label クラスを適用 %>
+                            <%= form.label :regist_date, "購入日", class: "form-label fw-semibold" %>
+                            <%# form-control クラスを適用 %>
+                            <%= form.date_field :regist_date, class: "form-control form-control-lg", placeholder: "例: 1234" %>
+                        </div>
+                        <div class="mb-3">
+                            <%# form-label クラスを適用 %>
+                            <%= form.label :category_id, "カテゴリ", class: "form-label fw-semibold" %>
+                            <%# form-control クラスを適用 %>
+                            <%= form.select :category_id, ["スーパー", "外食", "日用品"], {}, { class: "form-control form-control-lg"} %>
+                        </div>
+
+                        <%# btn と btn-primary クラスを適用 %>
+                        <%= form.submit "レシートを登録", class: "btn btn-primary btn-lg w-100" %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
