@@ -12,35 +12,35 @@
 
 ActiveRecord::Schema[8.1].define(version: 2025_11_16_025834) do
   create_table "receipt_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "created_at", null: false
+    t.string "name"
     t.text "description"
     t.boolean "food_related"
-    t.string "name"
+    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "receipts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "created_at", null: false
     t.text "memo"
     t.bigint "price"
-    t.bigint "receipt_category_id", null: false
     t.date "regist_date"
-    t.datetime "updated_at", null: false
+    t.bigint "receipt_category_id", null: false
     t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.index ["receipt_category_id"], name: "index_receipts_on_receipt_category_id"
     t.index ["user_id"], name: "index_receipts_on_user_id"
   end
 
   create_table "user_groups", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "created_at", null: false
     t.string "name"
+    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "users", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.string "email"
     t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "user_group_id"
     t.index ["user_group_id"], name: "index_users_on_user_group_id"
