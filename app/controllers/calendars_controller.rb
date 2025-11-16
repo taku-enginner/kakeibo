@@ -15,7 +15,6 @@ class CalendarsController < ApplicationController
 
     get_joined_group_receipts_related_food
     get_joined_group_receipts_except_food
-    # 週の合計金額
   end
 
   def show

@@ -42,23 +42,25 @@
         <% is_current_month = day.month == @date.month %>
 
         <div class="col kakeibo-day-cell <%= is_current_month ? '' : 'text-muted' %> border-start border-end">
-          <div class="day-header">
-            <%# 日付の数字を表示 %>
-            <span><%= link_to day.day, calendar_path(day) %></span>
-          </div>
+          <% if day >= @date.beginning_of_month and day <= @date.end_of_month %>
+            <div class="day-header">
+              <%# 日付の数字を表示 %>
+              <span><%= link_to day.day, calendar_path(day) %></span>
+            </div>
 
-          <div class="item-area">
-              <div class="item-row d-flex justify-content-between">
-                <span>食費</span><span>¥ <%= @calendar_price_related_food[day] %></span>
-              </div>
-              <div class="item-row d-flex justify-content-between">
-              <span>その他</span><span>¥ <%= @calendar_price_except_food[day] %></span>
-              </div>
-          </div>
+            <div class="item-area">
+                <div class="item-row d-flex justify-content-between">
+                  <span>食費</span><span>¥ <%= @calendar_price_related_food[day] %></span>
+                </div>
+                <div class="item-row d-flex justify-content-between">
+                <span>その他</span><span>¥ <%= @calendar_price_except_food[day] %></span>
+                </div>
+            </div>
 
-          <div class="day-total">
-            <span>合計</span><span>¥ <%= [@calendar_price_related_food[day], @calendar_price_except_food[day]].sum %></span>
-          </div>
+            <div class="day-total">
+              <span>合計</span><span>¥ <%= [@calendar_price_related_food[day], @calendar_price_except_food[day]].sum %></span>
+            </div>
+           <% end %>
         </div>
       <% end %>
 
