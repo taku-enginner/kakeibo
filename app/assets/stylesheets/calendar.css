@@ -1,0 +1,31 @@
+/* カレンダーセルの高さを固定し、内容に合わせて調整 */
+.kakeibo-day-cell {
+    min-height: 120px; /* 一日の最低の高さ */
+    padding: 0 !important;
+    border-right: 1px solid #ddd;
+}
+/* 日付表示エリア */
+.day-header {
+    background-color: #f8f9fa;
+    padding: 3px 6px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+/* 項目入力エリア */
+.item-row {
+    font-size: 0.75rem;
+    padding: 3px 6px;
+}
+/* 日の合計欄 */
+.day-total {
+    background-color: #e9ecef;
+    padding: 3px 6px;
+    font-weight: bold;
+}
+/* 週の合計欄 */
+.week-total-cell {
+    background-color: #e6f7ff; /* 週の合計を強調 */
+    border-left: 3px double #007bff;
+    padding: 8px 12px;
+    min-width: 150px; /* 合計欄の幅を確保 */
+}

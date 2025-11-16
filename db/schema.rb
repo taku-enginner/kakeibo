@@ -26,9 +26,9 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_16_044815) do
     t.bigint "receipt_category_id", null: false
     t.date "regist_date"
     t.datetime "updated_at", null: false
-    t.bigint "user_id", null: false
+    t.bigint "user_group_id", null: false
     t.index ["receipt_category_id"], name: "index_receipts_on_receipt_category_id"
-    t.index ["user_id"], name: "index_receipts_on_user_id"
+    t.index ["user_group_id"], name: "index_receipts_on_user_group_id"
   end
 
   create_table "user_groups", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -53,6 +53,6 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_16_044815) do
   end
 
   add_foreign_key "receipts", "receipt_categories"
-  add_foreign_key "receipts", "users"
+  add_foreign_key "receipts", "user_groups"
   add_foreign_key "users", "user_groups"
 end
