@@ -47,9 +47,6 @@
             <span><%= link_to day.day, calendar_path(day) %></span>
           </div>
 
-          <%# 💡 【機能】この日に対応する家計簿データを表示/入力するフォームを設置 %>
-          <%# 例: <%= render 'receipt_form', date: day %>
-
           <div class="item-area">
               <div class="item-row d-flex justify-content-between">
                 <span>食費</span><span>¥ <%= @calendar_price_related_food[day] %></span>
@@ -60,23 +57,23 @@
           </div>
 
           <div class="day-total">
-            <span>合計</span><span>¥ <%= @calendar_price_related_food[day] + @calendar_price_except_food[day] %></span>
+            <span>合計</span><span>¥ <%= [@calendar_price_related_food[day], @calendar_price_except_food[day]].sum %></span>
           </div>
         </div>
       <% end %>
 
-        <%# 💡 週の合計欄 (第1週の合計) %>
+        <%# 💡 週の合計欄 %>
         <div class="col-auto week-total-cell d-flex flex-column justify-content-center">
           <h6 class="fw-bold mb-1">第 <%= @count %> 週の合計</h6>
             <div class="item-row d-flex justify-content-between">
-                <span class="text-nowrap">食費合計</span><span class="fw-bold">¥ 0</span>
+              <span class="text-nowrap">食費合計</span><span class="fw-bold">¥ <%= @weekly_price_related_food[@count-1] %></span>
             </div>
             <div class="item-row d-flex justify-content-between">
-                <span class="text-nowrap">その他合計</span><span class="fw-bold">¥ 0</span>
+                <span class="text-nowrap">その他合計</span><span class="fw-bold">¥ <%= @weekly_price_except_food[@count-1] %></span>
             </div>
             <hr class="my-1">
             <div class="item-row d-flex justify-content-between">
-                <span class="text-nowrap">合計</span><span class="fw-bold text-danger">¥ 0</span>
+              <span class="text-nowrap">合計</span><span class="fw-bold text-danger">¥ <%= [@weekly_price_related_food[@count-1], @weekly_price_except_food[@count-1]].sum %></span>
             </div>
         </div>
       </div>
