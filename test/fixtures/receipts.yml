@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  receipt_category: one
+  user: one
+  amount: 
+  memo: MyText
+  regist_date: 2025-11-16
+
+two:
+  receipt_category: two
+  user: two
+  amount: 
+  memo: MyText
+  regist_date: 2025-11-16
