@@ -29,6 +29,13 @@ class ReceiptCategoriesController < ApplicationController
   end
 
   def destroy
+    puts params
+    @receipt_category = ReceiptCategory.find(params['id'])
+    if @receipt_category.destroy
+      redirect_to receipt_categories_path, notice: "カテゴリ「#{@receipt_category.name}」を削除しました"
+    else
+      redirect_to receipt_categories_path, danger: "カテゴリ「#{@receipt_category.name}」を削除できませんでした"
+    end
   end
 
   private
