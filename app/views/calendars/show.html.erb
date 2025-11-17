@@ -33,11 +33,15 @@
 
       <%# 2. 日付セルのループ %>
       <% week_days.each do |day| %>
+        <% is_day_red = false %>
+        <% @calendar_price_related_food_top5.each do |top5_day| %>
+          <% is_day_red = true if day == top5_day %>
+        <% end %>
 
         <%# その月の日付かどうかで色を変える %>
         <% is_current_month = day.month == @date.month %>
 
-        <div class="col kakeibo-day-cell <%= is_current_month ? '' : 'text-muted' %> border-start border-end">
+        <div class="col <%= is_day_red ? 'kakeibo-day-cell-red' : 'kakeibo-day-cell' %> <%= is_current_month ? '' : 'text-muted' %> border-start border-end">
           <% if day >= @date.beginning_of_month and day <= @date.end_of_month %>
             <div class="day-header">
               <%# 日付の数字を表示 %>

@@ -1,8 +1,15 @@
 /* カレンダーセルの高さを固定し、内容に合わせて調整 */
 .kakeibo-day-cell {
-    min-height: 120px; /* 一日の最低の高さ */
     padding: 0 !important;
+    position: relative;
     border-right: 1px solid #ddd;
+}
+/*トップ５の日を赤くする*/
+.kakeibo-day-cell-red {
+    padding: 0 !important;
+    position: relative;
+    border-right: 1px solid #ddd;
+    background-color: rgba(255, 0, 0, 0.2);
 }
 /* 日付表示エリア */
 .day-header {
@@ -18,6 +25,15 @@
 }
 /* 日の合計欄 */
 .day-total {
+    /* 💡 絶対配置で親要素の底に固定 */
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    /* Z-index で他の要素の上に確実に表示 */
+    z-index: 10;
+
     background-color: #e9ecef;
     padding: 3px 6px;
     font-weight: bold;
