@@ -1,127 +1,137 @@
+<%# app/views/calendars/index.html.erb %>
+
 <div class="container-fluid my-4">
+
+    <%# --- 1. 月のナビゲーション --- %>
     <div class="row mb-3 align-items-center">
         <div class="col-4">
             <%= button_to raw('<i class="bi bi-arrow-left"></i> 前月'), calendar_path(@date.beginning_of_month << 1), {method: :get, class: "btn btn-sm btn-outline-secondary"} %>
         </div>
         <div class="col-4 text-center">
-          <h2 class="h4 mb-0"><%= @date.strftime("%Y年 %m月")%></h2>
+          <h2 class="h6 mb-0"><%= @date.strftime("%Y年 %m月")%></h2>
         </div>
         <div class="col-4 text-end">
             <%= button_to raw('次月 <i class="bi bi-arrow-right"></i>'), calendar_path(@date.beginning_of_month >> 1), {method: :get, class: "btn btn-sm btn-outline-secondary"} %>
         </div>
     </div>
 
-     <%#曜日ヘッダー (7列)%>
-    <div class="row row-cols-7 g-0 text-center fw-bold border-bottom border-top">
-        <div class="col py-2 text-danger">日</div>
-        <div class="col py-2">月</div>
-        <div class="col py-2">火</div>
-        <div class="col py-2">水</div>
-        <div class="col py-2">木</div>
-        <div class="col py-2">金</div>
-        <div class="col py-2 text-primary">土</div>
-        <div class="col-auto week-total-cell border-end border-bottom"></div>
-    </div>
+    <%# ---------------------------------------------------- %>
+    <%# --- 2. カレンダー本体（横スクロールラッパー） --- %>
+    <div class="table-responsive">
 
-  <% @count=0 %>
-  <%# 💡 週のループ %>
-  <% @weeks.each_with_index do |week_days, week_index| %>
-    <% @count=@count+1 %>
+        <%# 曜日ヘッダー (8列構造 - 週合計欄のスペースを確保) %>
+        <div class="row row-cols-7 g-0 text-center fw-bold border-bottom border-top" style="min-width: 700px;">
+            <div class="col py-2 text-danger">日</div>
+            <div class="col py-2">月</div>
+            <div class="col py-2">火</div>
+            <div class="col py-2">水</div>
+            <div class="col py-2">木</div>
+            <div class="col py-2">金</div>
+            <div class="col py-2 text-primary">土</div>
+            <div class="col-auto week-total-cell border-end border-bottom"></div> <%# 週合計のスペース %>
+        </div>
 
-    <%# 1. 週全体の行 (Bootstrap row) %>
-    <div class="row g-0 border-bottom">
+        <%# --- 週のループ開始 --- %>
+        <% @count = 0 %>
+        <% @weeks.each_with_index do |week_days, week_index| %>
+            <% @count = @count + 1 %>
+            <%# 1. 週全体の行 (min-widthで横スクロールを担保) %>
+            <div class="row g-0 border-bottom" style="min-width: 700px;">
 
-      <%# 2. 日付セルのループ %>
-      <% week_days.each do |day| %>
-        <% is_day_red = false %>
-        <% @calendar_price_related_food_top5.each do |top5_day| %>
-          <% is_day_red = true if day == top5_day %>
+                <%# 2. 日付セルのループ (7日間) %>
+                <% week_days.each do |day| %>
+                    <% is_day_red = false %>
+                    <% @calendar_price_related_food_top5.each do |top5_day| %>
+                      <% is_day_red = true if day == top5_day %>
+                    <% end %>
+
+                    <% is_current_month = day.month == @date.month %>
+
+                    <div class="col <%= is_day_red ? 'kakeibo-day-cell-red' : 'kakeibo-day-cell' %> <%= is_current_month ? '' : 'text-muted' %> border-start border-end">
+                      <% if day >= @date.beginning_of_month and day <= @date.end_of_month %>
+                        <div class="day-header">
+                          <span><%= link_to day.day, daily_result_path(day) %></span>
+                        </div>
+
+                        <div class="item-area">
+                          <div class="item-row d-flex justify-content-between">
+                            <span>食費</span><span>¥ <%= @calendar_price_related_food[day] %></span>
+                          </div>
+                          <div class="item-row d-flex justify-content-between">
+                            <span>他</span><span>¥ <%= @calendar_price_except_food[day] %></span>
+                          </div>
+                        </div>
+
+                        <div class="day-total">
+                          <span>¥ <%= [@calendar_price_related_food[day], @calendar_price_except_food[day]].sum %></span>
+                        </div>
+                      <% end %>
+                    </div>
+                <% end %>
+
+                <%# 3. 週の合計欄 (固定幅) %>
+                <div class="col-auto week-total-cell d-flex flex-column justify-content-center">
+                    <h6 class="fw-bold mb-1">第 <%= @count %> 週の合計</h6>
+                    <div class="item-row d-flex justify-content-between">
+                      <span class="text-nowrap">食費合計</span><span class="fw-bold">¥ <%= @weekly_price_related_food[@count-1] %></span>
+                    </div>
+                    <div class="item-row d-flex justify-content-between">
+                        <span class="text-nowrap">その他合計</span><span class="fw-bold">¥ <%= @weekly_price_except_food[@count-1] %></span>
+                    </div>
+                    <hr class="my-1">
+                    <div class="item-row d-flex justify-content-between">
+                      <span class="text-nowrap">合計</span><span class="fw-bold text-danger">¥ <%= [@weekly_price_related_food[@count-1], @weekly_price_except_food[@count-1]].sum %></span>
+                    </div>
+                </div>
+            </div>
         <% end %>
+        <%# --- 週のループ終了 --- %>
 
-        <%# その月の日付かどうかで色を変える %>
-        <% is_current_month = day.month == @date.month %>
+    </div> <%# /table-responsive を閉じる %>
+    <%# ---------------------------------------------------- %>
 
-        <div class="col <%= is_day_red ? 'kakeibo-day-cell-red' : 'kakeibo-day-cell' %> <%= is_current_month ? '' : 'text-muted' %> border-start border-end">
-          <% if day >= @date.beginning_of_month and day <= @date.end_of_month %>
-            <div class="day-header">
-              <%# 日付の数字を表示 %>
-              <span><%= link_to day.day, daily_result_path(day) %></span>
-            </div>
 
-            <div class="item-area">
-                <div class="item-row d-flex justify-content-between">
-                  <span>食費</span><span>¥ <%= @calendar_price_related_food[day] %></span>
-                </div>
-                <div class="item-row d-flex justify-content-between">
-                <span>他</span><span>¥ <%= @calendar_price_except_food[day] %></span>
-                </div>
-            </div>
+    <%# --- 3. 月の合計欄 (レスポンシブ対応) --- %>
+    <div class="row g-0 mt-4 p-3 bg-light border rounded shadow-sm align-items-center">
 
-            <div class="day-total">
-              <span>合計</span><span>¥ <%= [@calendar_price_related_food[day], @calendar_price_except_food[day]].sum %></span>
-            </div>
-           <% end %>
+        <%# タイトル (スマホではフル幅、PCでは左側) %>
+        <div class="col-12 col-md-5 mb-3 mb-md-0">
+            <h4 class="fw-bold text-secondary mb-0">
+                <%= @date.strftime("%Y年 %m月") %> の総合計
+            </h4>
         </div>
-      <% end %>
 
-        <%# 💡 週の合計欄 %>
-        <div class="col-auto week-total-cell d-flex flex-column justify-content-center">
-          <h6 class="fw-bold mb-1">第 <%= @count %> 週の合計</h6>
-            <div class="item-row d-flex justify-content-between">
-              <span class="text-nowrap">食費合計</span><span class="fw-bold">¥ <%= @weekly_price_related_food[@count-1] %></span>
+        <%# 合計内訳 (PCでは右側、スマホでは縦積み) %>
+        <div class="col-12 col-md-7">
+            <div class="row g-2">
+
+                <%# 食費合計 (スマホでは2列) %>
+                <div class="col-6 col-md-4 text-center border-end">
+                    <span class="d-block small text-muted">食費合計</span>
+                    <span class="d-block h5 fw-bolder text-info">
+                        ¥ <%= @weekly_price_related_food.sum %>
+                    </span>
+                </div>
+
+                <%# その他合計 (スマホでは2列) %>
+                <div class="col-6 col-md-4 text-center border-end">
+                    <span class="d-block small text-muted">その他合計</span>
+                    <span class="d-block h5 fw-bolder text-info">
+                        ¥ <%= @weekly_price_except_food.sum %>
+                    </span>
+                </div>
+
+                <%# 総合計 (スマホではフル幅に近く、目立たせる) %>
+                <div class="col-12 col-md-4 text-center bg-danger-subtle rounded py-2 py-md-0">
+                    <span class="d-block small text-dark">総合計</span>
+                    <span class="d-block h4 fw-bolder text-danger">
+                        ¥ <%= [@weekly_price_related_food.sum, @weekly_price_except_food.sum].sum %>
+                    </span>
+                </div>
+
             </div>
-            <div class="item-row d-flex justify-content-between">
-                <span class="text-nowrap">その他合計</span><span class="fw-bold">¥ <%= @weekly_price_except_food[@count-1] %></span>
-            </div>
-            <hr class="my-1">
-            <div class="item-row d-flex justify-content-between">
-              <span class="text-nowrap">合計</span><span class="fw-bold text-danger">¥ <%= [@weekly_price_related_food[@count-1], @weekly_price_except_food[@count-1]].sum %></span>
-            </div>
-        </div>
-      </div>
-  <% end %>
-</div>
-
-<%# 💡 ここから月の合計欄 (カレンダーの直下) %>
-<div class="row g-0 mt-4 p-3 bg-light border rounded shadow-sm align-items-center">
-
-    <div class="col-md-5">
-        <h4 class="fw-bold text-secondary mb-0">
-            <%= @date.strftime("%Y年 %m月") %> の総合計
-        </h4>
-    </div>
-
-    <div class="col-md-7">
-        <div class="row g-2">
-
-            <%# 食費合計 %>
-            <div class="col-4 text-center border-end">
-                <span class="d-block small text-muted">食費合計</span>
-                <%# @monthly_price_related_food が月全体の食費合計を格納していると仮定 %>
-                <span class="d-block h5 fw-bolder text-info">
-                    ¥ <%= @weekly_price_related_food.sum %>
-                </span>
-            </div>
-
-            <%# その他合計 %>
-            <div class="col-4 text-center border-end">
-                <span class="d-block small text-muted">その他合計</span>
-                <%# @monthly_price_except_food が月全体のその他合計を格納していると仮定 %>
-                <span class="d-block h5 fw-bolder text-info">
-                    ¥ <%= @weekly_price_except_food.sum %>
-                </span>
-            </div>
-
-            <%# 総合計 (ハイライト) %>
-            <div class="col-4 text-center">
-                <span class="d-block small text-dark">総合計</span>
-                <span class="d-block h4 fw-bolder text-danger">
-                    <%# 食費合計とその他合計を合計 %>
-                    ¥ <%= [@weekly_price_related_food.sum, @weekly_price_except_food.sum].sum %>
-                </span>
-            </div>
-
         </div>
     </div>
+    <%# ---------------------------------------- %>
+
 </div>
-<%# ---------------------------------------- %>
