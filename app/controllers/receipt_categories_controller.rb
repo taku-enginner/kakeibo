@@ -1,6 +1,6 @@
 class ReceiptCategoriesController < ApplicationController
   def index
-    @receipt_categories = ReceiptCategory.all
+    @receipt_categories = ReceiptCategory.all.order(food_related: :desc)
     @receipt_category = ReceiptCategory.new
   end
 
