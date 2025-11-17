@@ -45,9 +45,7 @@
                       <% is_day_red = true if day == top5_day %>
                     <% end %>
 
-                    <% is_current_month = day.month == @date.month %>
-
-                    <div class="col <%= is_day_red ? 'kakeibo-day-cell-red' : 'kakeibo-day-cell' %> <%= is_current_month ? '' : 'text-muted' %> border-start border-end">
+                    <div class="col <%= is_day_red ? 'kakeibo-day-cell-red' : 'kakeibo-day-cell' %> border-start border-end">
                       <% if day >= @date.beginning_of_month and day <= @date.end_of_month %>
                         <div class="day-header">
                           <span><%= link_to day.day, daily_result_path(day) %></span>
