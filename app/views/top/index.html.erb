@@ -1,32 +1,76 @@
-<%# app/views/homes/_home.html.erb %>
+<%# app/views/shared/_usage_guide.html.erb %>
 
-<div class="row justify-content-center mt-5">
-    <div class="col-lg-8 col-md-10">
+<%= render "shared/marketing_message" %>
 
-        <h1 class="text-center text-primary mb-4">🏠 ホームページ</h1>
+<div class="container my-5">
+    <h2 class="text-center text-secondary mb-4">はじめての方へ：使い方ガイド</h2>
 
-        <div class="card shadow-sm p-4">
-            <div class="card-body text-center">
-                <p class="lead">
-                    このページは、MyKakeiboアプリのダッシュボード（トップページ）です。
-                </p>
+    <div class="row g-4 justify-content-center">
 
-                <h3 class="mt-4">主要機能へのリンク</h3>
-
-                <div class="d-grid gap-2 col-md-8 mx-auto mt-3">
-                    <a href="#" class="btn btn-outline-success btn-lg">
-                        <i class="bi bi-journal-plus me-2"></i> 新規取引の記録
-                    </a>
-                    <a href="#" class="btn btn-outline-info">
-                        <i class="bi bi-list-ul me-2"></i> 全ての取引履歴を見る
-                    </a>
-                    <a href="#" class="btn btn-outline-info">
-                        <i class="bi bi-list-ul me-2"></i> 全ての取引履歴を見る
-                    </a>
-                    <%= link_to "レシート一覧", receipts_path  %>
-                    <%= link_to "レシートカテゴリ一覧", receipt_categories_path  %>
+        <%# ステップ 1: アカウント登録/ログイン %>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 text-center pt-3">
+                <div class="card-body">
+                    <i class="bi bi-person-circle text-primary mb-3" style="font-size: 3rem;"></i>
+                    <h5 class="card-title fw-bold">1. ユーザー登録・ログイン</h5>
+                    <p class="card-text text-muted">
+                        まずアカウントを作成し、ログインしてください。あなたの家計簿データは安全に管理されます。
+                    </p>
+                    <%= link_to '今すぐログイン', new_user_session_path, class: "btn btn-sm btn-outline-primary" %>
                 </div>
             </div>
         </div>
+
+        <%# ステップ 2: カテゴリの準備 %>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 text-center pt-3">
+                <div class="card-body">
+                    <i class="bi bi-tags-fill text-success mb-3" style="font-size: 3rem;"></i>
+                    <h5 class="card-title fw-bold">2. カテゴリを作成する</h5>
+                    <p class="card-text text-muted">
+                        「食費」や「交通費」など、支出を分類するためのカテゴリを自由に登録します。
+                    </p>
+                    <%= link_to 'カテゴリ管理へ', receipt_categories_path, class: "btn btn-sm btn-outline-success" %>
+                </div>
+            </div>
+        </div>
+
+        <%# ステップ 3: 取引の記録 %>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 text-center pt-3">
+                <div class="card-body">
+                    <i class="bi bi-pencil-square text-danger mb-3" style="font-size: 3rem;"></i>
+                    <h5 class="card-title fw-bold">3. レシートを登録する</h5>
+                    <p class="card-text text-muted">
+                        支払い後すぐに金額、カテゴリ、メモを入力して取引を記録しましょう。
+                    </p>
+                    <%= link_to 'レシート登録へ', new_receipt_path, class: "btn btn-sm btn-outline-danger" %>
+                </div>
+            </div>
+        </div>
+
+        <%# ステップ 4: カレンダーで確認 %>
+        <div class="col-md-6 col-lg-4">
+            <div class="card h-100 shadow-sm border-0 text-center pt-3 bg-warning-subtle border-warning">
+                <div class="card-body">
+                    <i class="bi bi-calendar-check text-warning mb-3" style="font-size: 3rem;"></i>
+                    <h5 class="card-title fw-bold">4. 食費をカレンダーで分析</h5>
+                    <p class="card-text text-muted small">
+                        食費は家計の最重要項目です。カレンダーの各マスで 食費の合計 がすぐに見られます。
+                    </p>
+                    <hr class="my-2">
+                    <p class="card-text fw-semibold text-dark">
+                        🔥 支出ランキング強調表示:<br>
+                        食費の 支出が多かった日トップ5 がカレンダー上で自動的にハイライトされます。
+                    </p>
+                    <%= link_to 'カレンダーを見る', calendar_path(Date.current), class: "btn btn-sm btn-warning" %>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="text-center mt-5">
+        <p class="text-muted">さあ、家計管理を始めましょう！</p>
     </div>
 </div>
