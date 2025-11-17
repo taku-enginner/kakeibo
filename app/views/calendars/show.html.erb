@@ -1,19 +1,13 @@
 <div class="container-fluid my-4">
     <div class="row mb-3 align-items-center">
         <div class="col-4">
-            <button class="btn btn-sm btn-outline-secondary">
-                <i class="bi bi-arrow-left"></i> 前月
-            </button>
-            <%= button_to "前月", calendar_path(@date.beginning_of_month << 1), {method: :get} %>
+            <%= button_to raw('<i class="bi bi-arrow-left"></i> 前月'), calendar_path(@date.beginning_of_month << 1), {method: :get, class: "btn btn-sm btn-outline-secondary"} %>
         </div>
         <div class="col-4 text-center">
           <h2 class="h4 mb-0"><%= @date.strftime("%Y年 %m月")%></h2>
         </div>
         <div class="col-4 text-end">
-            <button class="btn btn-sm btn-outline-secondary">
-                次月 <i class="bi bi-arrow-right"></i>
-            </button>
-            <%= button_to "次月", calendar_path(@date.beginning_of_month >> 1), {method: :get} %>
+            <%= button_to raw('次月 <i class="bi bi-arrow-right"></i>'), calendar_path(@date.beginning_of_month >> 1), {method: :get, class: "btn btn-sm btn-outline-secondary"} %>
         </div>
     </div>
 
@@ -83,3 +77,4 @@
       </div>
   <% end %>
 </div>
+

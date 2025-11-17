@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   }
   resources :receipt_categories, only: [:index, :show, :create, :edit, :update, :destroy]
   resources :receipts
-  resources :calendars, only: [:index, :show]
+  resources :calendars, only: [:show]
   resources :daily_results, only: [:index, :show]
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
