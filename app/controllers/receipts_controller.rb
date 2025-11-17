@@ -11,7 +11,6 @@ class ReceiptsController < ApplicationController
     ReceiptCategory.all.each do |category|
       @receipt_category_map[category.id] = category.name
     end
-    puts @receipt_category_map
   end
 
   def show

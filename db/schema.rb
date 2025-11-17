@@ -12,10 +12,10 @@
 
 ActiveRecord::Schema[8.1].define(version: 2025_11_16_044815) do
   create_table "receipt_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
-    t.datetime "created_at", null: false
+    t.string "name"
     t.text "description"
     t.boolean "food_related"
-    t.string "name"
+    t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 

@@ -1,2 +1,42 @@
-<h1>ReceiptCategories#new</h1>
-<p>Find me in app/views/receipt_categories/new.html.erb</p>
+<% if @receipt_category.errors.any? %>
+  <div class="alert alert-danger">
+    <h4 class="alert-heading"><%= @receipt_category.errors.count %>件のエラーがあります:</h4>
+    <ul>
+      <% @receipt_category.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+            <!-- フォームカード -->
+            <div class="card shadow-lg mb-4 rounded-3 border-info">
+                <div class="card-header bg-info text-white p-3">
+                    <h2 class="h5 mb-0 fw-bold">新しいカテゴリを追加</h2>
+                </div>
+                <div class="card-body p-4">
+                    <%= form_with model: @receipt_category, local: true do |form| %>
+                        <div class="mb-3">
+                            <%= form.label :name, "カテゴリ名", class: "form-label fw-semibold" %>
+                            <%= form.text_field :name, class: "form-control form-control-lg", placeholder: "例: 外食" %>
+                        </div>
+                        <div class="mb-3">
+                            <%= form.label :description, "使い方", class: "form-label fw-semibold" %>
+                            <%= form.text_field :description, class: "form-control form-control-lg", placeholder: "例: 外食で使う" %>
+                        </div>
+                        <div class="mb-3">
+                            <%= form.label :food_related, "食関連ですか？", class: "form-label fw-semibold" %>
+                            <%= form.radio_button :food_related, class: "form-control form-control-lg" %>
+                            <%= form.label :true, "はい", class: "form-label fw-semibold" %>
+                            <%= form.radio_button :food_related, class: "form-control form-control-lg" %>
+                            <%= form.label :false, "いいえ", class: "form-label fw-semibold" %>
+                        </div>
+                        <%= form.submit "カテゴリを登録", class: "btn btn-primary btn-lg w-100" %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
