@@ -82,3 +82,46 @@
   <% end %>
 </div>
 
+<%# 💡 ここから月の合計欄 (カレンダーの直下) %>
+<div class="row g-0 mt-4 p-3 bg-light border rounded shadow-sm align-items-center">
+
+    <div class="col-md-5">
+        <h4 class="fw-bold text-secondary mb-0">
+            <%= @date.strftime("%Y年 %m月") %> の総合計
+        </h4>
+    </div>
+
+    <div class="col-md-7">
+        <div class="row g-2">
+
+            <%# 食費合計 %>
+            <div class="col-4 text-center border-end">
+                <span class="d-block small text-muted">食費合計</span>
+                <%# @monthly_price_related_food が月全体の食費合計を格納していると仮定 %>
+                <span class="d-block h5 fw-bolder text-info">
+                    ¥ <%= @weekly_price_related_food.sum %>
+                </span>
+            </div>
+
+            <%# その他合計 %>
+            <div class="col-4 text-center border-end">
+                <span class="d-block small text-muted">その他合計</span>
+                <%# @monthly_price_except_food が月全体のその他合計を格納していると仮定 %>
+                <span class="d-block h5 fw-bolder text-info">
+                    ¥ <%= @weekly_price_except_food.sum %>
+                </span>
+            </div>
+
+            <%# 総合計 (ハイライト) %>
+            <div class="col-4 text-center">
+                <span class="d-block small text-dark">総合計</span>
+                <span class="d-block h4 fw-bolder text-danger">
+                    <%# 食費合計とその他合計を合計 %>
+                    ¥ <%= [@weekly_price_related_food.sum, @weekly_price_except_food.sum].sum %>
+                </span>
+            </div>
+
+        </div>
+    </div>
+</div>
+<%# ---------------------------------------- %>
