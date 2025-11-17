@@ -20,11 +20,19 @@ class CalendarsController < ApplicationController
   private
 
   def get_joined_group_receipts_related_food
-    joined_group_receipts_related_food = Receipt.joins(:receipt_category)
-      .where(
-      user_group_id: current_user.user_group.id,
-      receipt_category: {food_related: true}
-    )
+    if current_user.user_group.nil?
+      joined_group_receipts_related_food = Receipt.joins(:receipt_category)
+        .where(
+          user_id: current_user.id,
+          receipt_category: {food_related: true}
+      )
+    else
+      joined_group_receipts_related_food = Receipt.joins(:receipt_category)
+        .where(
+          user_group_id: current_user.user_group.id,
+          receipt_category: {food_related: true}
+      )
+    end
 
     @calendar_price_related_food = {}
     @calendar_days.each do |day|
@@ -71,11 +79,19 @@ class CalendarsController < ApplicationController
   end
 
   def get_joined_group_receipts_except_food
-    joined_group_receipts_except_food = Receipt.joins(:receipt_category)
-      .where(
-      user_group_id: current_user.user_group.id,
-      receipt_category: {food_related: false}
-    )
+    if current_user.user_group.nil?
+      joined_group_receipts_except_food = Receipt.joins(:receipt_category)
+        .where(
+          user_id: current_user.id,
+          receipt_category: {food_related: false}
+        )
+    else
+      joined_group_receipts_except_food = Receipt.joins(:receipt_category)
+        .where(
+          user_group_id: current_user.user_group.id,
+          receipt_category: {food_related: false}
+      )
+    end
 
     @calendar_price_except_food = {}
     @calendar_days.each do |day|

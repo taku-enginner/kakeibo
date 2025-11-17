@@ -2,11 +2,19 @@ class ReceiptsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @receipts = Receipt.joins(:receipt_category)
-      .where(
-        user_group_id: current_user.user_group.id
-      )
-        .order(:regist_date)
+    if current_user.user_group_id.nil?
+      @receipts = Receipt.joins(:receipt_category)
+        .where(
+          user_id: current_user.id
+        )
+          .order(:regist_date)
+    else
+      @receipts = Receipt.joins(:receipt_category)
+        .where(
+          user_group_id: current_user.user_group.id
+        )
+          .order(:regist_date)
+    end
     @receipt_category_map = {}
     ReceiptCategory.all.each do |category|
       @receipt_category_map[category.id] = category.name
@@ -22,9 +30,10 @@ class ReceiptsController < ApplicationController
 
   def create
     @receipt = Receipt.new(receipt_params)
-    @receipt.user_group_id = current_user.user_group.id
+    @receipt.user_id = current_user.id
+    @receipt.user_group_id = current_user.user_group.id if !current_user.user_group_id.nil?
     if @receipt.save
-      redirect_to receipts_path, notice: "レシートを記録しました"
+      redirect_to calendar_path(Date.current), notice: "レシートを記録しました"
     else
       render :new, status: :unprocessable_entity
     end
