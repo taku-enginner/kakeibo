@@ -19,5 +19,8 @@ Rails.application.routes.draw do
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
   # Defines the root path route ("/")
-   root "top#index"
+  root "top#index"
+
+  # どこにも当てはまらなかったものを取得するので最終行に書いて下さい。
+  get '*path', to: 'application#render_404'
 end
