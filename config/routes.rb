@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   devise_for :users, controllers: {
     registrations: 'users/registrations' #カスタムコントローラを使用
   }
-  resources :receipt_categories
+  resources :receipt_categories, only: [:index, :show, :create, :edit, :update, :destroy]
   resources :receipts
   resources :calendars, only: [:index, :show]
   resources :daily_results, only: [:index, :show]

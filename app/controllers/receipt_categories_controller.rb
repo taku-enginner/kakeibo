@@ -8,10 +8,6 @@ class ReceiptCategoriesController < ApplicationController
     @receipt_category = ReceiptCategory.find(params['id'])
   end
 
-  def new
-    @receipt_category = ReceiptCategory.new
-  end
-
   def create
     @receipt_category = ReceiptCategory.new(receipt_category_params)
     if @receipt_category.save
@@ -29,7 +25,6 @@ class ReceiptCategoriesController < ApplicationController
   end
 
   def destroy
-    puts params
     @receipt_category = ReceiptCategory.find(params['id'])
     if @receipt_category.destroy
       redirect_to receipt_categories_path, notice: "カテゴリ「#{@receipt_category.name}」を削除しました"
