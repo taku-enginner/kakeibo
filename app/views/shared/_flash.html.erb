@@ -1,0 +1,26 @@
+<% flash.each do |msg_type, message| %>
+  <% alert_class = case msg_type.to_s
+    when 'notice' then 'success'
+    when 'alert', 'error' then 'danger'
+    else 'info'
+  end %>
+
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-12">
+
+        <div class="alert alert-<%= alert_class %> alert-dismissible fade show text-center" role="alert">
+
+          <% if alert_class == 'success' %>
+            <i class="bi bi-check-circle-fill me-2"></i>
+          <% end %>
+
+          <%= message %>
+
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+<% end %>
