@@ -10,13 +10,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2025_11_17_091506) do
+ActiveRecord::Schema[8.1].define(version: 2025_11_17_110005) do
   create_table "receipt_categories", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.text "description"
     t.boolean "food_related"
     t.string "name"
     t.datetime "updated_at", null: false
+    t.bigint "user_group_id", null: false
+    t.index ["user_group_id"], name: "index_receipt_categories_on_user_group_id"
   end
 
   create_table "receipts", charset: "utf8mb4", collation: "utf8mb4_0900_ai_ci", force: :cascade do |t|
@@ -53,6 +55,7 @@ ActiveRecord::Schema[8.1].define(version: 2025_11_17_091506) do
     t.index ["user_group_id"], name: "index_users_on_user_group_id"
   end
 
+  add_foreign_key "receipt_categories", "user_groups"
   add_foreign_key "receipts", "receipt_categories"
   add_foreign_key "receipts", "user_groups"
   add_foreign_key "users", "user_groups"

@@ -43,7 +43,11 @@
                             <%# form-label クラスを適用 %>
                             <%= form.label :receipt_category_id, "カテゴリ", class: "form-label fw-semibold" %>
                             <%# form-control クラスを適用 %>
-                            <%= form.select :receipt_category_id, [["スーパー", 1], ["外食", 2], ["日用品", 3]], {}, { class: "form-control form-control-lg"} %>
+                            <%= form.select :receipt_category_id,
+                            @receipt_categories.each.map { |category|
+                              [ category.name, category.id ]
+                            },
+                            {}, { class: "form-control form-control-lg"} %>
                         </div>
 
                         <%# btn と btn-primary クラスを適用 %>

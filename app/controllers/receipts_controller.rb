@@ -26,6 +26,7 @@ class ReceiptsController < ApplicationController
 
   def new
     @receipt = Receipt.new(regist_date: Date.current)
+    @receipt_categories = ReceiptCategory.where(user_group_id: current_user.user_group_id)
   end
 
   def create

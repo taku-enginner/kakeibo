@@ -36,6 +36,6 @@ class ReceiptCategoriesController < ApplicationController
   private
 
   def receipt_category_params
-    params.require(:receipt_category).permit(:name, :description, :food_related)
+    params.require(:receipt_category).permit(:name, :description, :food_related, :user_group_id)
   end
 end

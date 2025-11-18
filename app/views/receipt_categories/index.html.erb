@@ -30,6 +30,7 @@
                 <%= form.label :food_related_false, "いいえ", class: "form-check-label" %>
               </div>
             </div>
+            <%= form.hidden_field :user_group_id, value: current_user.user_group_id %>
             <%= form.submit "カテゴリを登録", class: "btn btn-primary btn-lg w-100" %>
           <% end %>
         </div>
